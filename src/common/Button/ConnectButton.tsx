@@ -1,23 +1,17 @@
 import { PropsWithChildren } from "react";
 
 interface ConnectButtonProps {
-  paddingX?: string;
-  paddingY?: string;
-  borderRadius?: string;
+  customClassName?: string;
 }
 
+const commonClassName =
+  "text-pink-900 bg-pink-100 text-center text-base font-bold ";
 function ConnectButton({
-  paddingX = "3",
-  paddingY = "3",
-  borderRadius = "none",
+  customClassName,
   children,
 }: PropsWithChildren<ConnectButtonProps>) {
   return (
-    <button
-      className={`text-pink-900 bg-pink-100 px-${paddingX} py-${paddingY} rounded-${borderRadius} text-center text-base font-bold`}
-    >
-      {children}
-    </button>
+    <button className={commonClassName + customClassName}>{children}</button>
   );
 }
 
