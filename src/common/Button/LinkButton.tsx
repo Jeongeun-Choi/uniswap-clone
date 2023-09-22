@@ -5,7 +5,7 @@ interface LinkButtonProps {
 }
 
 const commonClassName =
-  "text-gray-700 hover:bg-gray-100 rounded-full text-center text-base ";
+  "text-gray-700 hover:bg-gray-100 rounded-2xl text-center text-base ";
 function LinkButton({
   customClassName = "px-3 py-3",
   children,

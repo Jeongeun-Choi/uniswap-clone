@@ -13,6 +13,7 @@
     color: theme("colors.white");
     background-color: theme("colors.pink-900");
     font-weight: theme("fontWeight.semibold");
+    @apply text-[20px];
   }
 
   .flex_between {
