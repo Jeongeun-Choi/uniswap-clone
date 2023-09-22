@@ -14,6 +14,18 @@
     background-color: theme("colors.pink-900");
     font-weight: theme("fontWeight.semibold");
   }
+
+  .flex_between {
+    @apply flex justify-between;
+  }
+
+  .flex_direction_col {
+    @apply flex flex-col;
+  }
+
+  .basic_border {
+    @apply border border-solid;
+  }
 }
 
 body {

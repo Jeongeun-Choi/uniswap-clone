@@ -1,6 +1,6 @@
 function Input() {
   return (
-    <div className="px-4 py-3 border-solid border rounded-[12px] border-gray-200 bg-gray-100">
+    <div className="px-4 py-3 basic_border rounded-[12px] border-gray-200 bg-gray-100">
       <div className="flex">
         <input
           placeholder="Search tokens and NFT collections"
