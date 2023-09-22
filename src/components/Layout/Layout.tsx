@@ -1,4 +1,9 @@
 import { PropsWithChildren } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEllipsis,
+  faMagnifyingGlass,
+} from "@fortawesome/free-solid-svg-icons";
 import { CommonButton, LinkButton } from "../../common/Button";
 import Input from "../Input/Input";
 
@@ -21,10 +26,19 @@ function Layout({ children }: PropsWithChildren) {
               </li>
             ))}
             <li>
-              <LinkButton customClassName="px-3 py-2">More</LinkButton>
+              <LinkButton customClassName="px-3 py-2">
+                <FontAwesomeIcon icon={faEllipsis} />
+              </LinkButton>
             </li>
           </ul>
-          <Input />
+          <Input
+            leftIcon={
+              <FontAwesomeIcon
+                icon={faMagnifyingGlass}
+                className="text-gray-700 mr-1.5"
+              />
+            }
+          />
           <div className="flex">
             <div className="text-blue-500 text-xl font-bold">드롭다운</div>
             <CommonButton customClassName="connect_button px-3 py-2.5 rounded-full text-medium">
