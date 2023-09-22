@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { CommonButton } from "../../common/Button";
 
 interface SwapSectionProps {
@@ -17,7 +19,10 @@ function SwapSection({ title, value, onChangeInput }: SwapSectionProps) {
           value={value}
           onChange={onChangeInput}
         />
-        <CommonButton customClassName="px-2 py-1.5 rounded-2xl">
+        <CommonButton
+          customClassName="select_button px-2 py-1.5 rounded-2xl"
+          leftIcon={<FontAwesomeIcon icon={faChevronDown} className="ml-1" />}
+        >
           Select token
         </CommonButton>
       </div>
