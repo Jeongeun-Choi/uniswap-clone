@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { ConnectButton, LinkButton } from "../../common/Button";
+import { CommonButton, LinkButton } from "../../common/Button";
 import Input from "../Input/Input";
 
 const navItems = [
@@ -27,9 +27,9 @@ function Layout({ children }: PropsWithChildren) {
           <Input />
           <div className="flex">
             <div className="text-blue-500 text-xl font-bold">드롭다운</div>
-            <ConnectButton customClassName="px-3 py-2.5 rounded-full">
+            <CommonButton customClassName="connect_button px-3 py-2.5 rounded-full text-medium">
               Connect
-            </ConnectButton>
+            </CommonButton>
           </div>
         </nav>
       </header>

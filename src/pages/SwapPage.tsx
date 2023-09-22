@@ -1,4 +1,4 @@
-import { ConnectButton } from "../common/Button";
+import { CommonButton } from "../common/Button";
 
 function SwapPage() {
   return (
@@ -17,9 +17,9 @@ function SwapPage() {
               <span>You pay</span>
               <div className="flex justify-between">
                 <input className="flex grow bg-gray-100" />
-                <ConnectButton customClassName="px-2 py-1.5 rounded-2xl">
+                <CommonButton customClassName="px-2 py-1.5 rounded-2xl">
                   Select token
-                </ConnectButton>
+                </CommonButton>
               </div>
               <span>$0</span>
             </section>
@@ -30,16 +30,16 @@ function SwapPage() {
               <span>You receive</span>
               <div className="flex justify-between">
                 <input className="flex grow bg-gray-100" />
-                <ConnectButton customClassName="px-2 py-1.5 rounded-2xl">
+                <CommonButton customClassName="select_button px-2 py-1.5 rounded-2xl">
                   Select token
-                </ConnectButton>
+                </CommonButton>
               </div>
               <span>$0</span>
             </section>
           </article>
-          <ConnectButton customClassName="w-full p-4 rounded-2xl mt-1">
+          <CommonButton customClassName="connect_button text-xl w-full p-4 rounded-2xl mt-1">
             Connect Wallet
-          </ConnectButton>
+          </CommonButton>
         </main>
       </div>
     </div>
