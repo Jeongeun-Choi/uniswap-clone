@@ -11,6 +11,10 @@ module.exports = {
         "pink-100": "#ffefff",
         "pink-900": "#fc72ff",
       },
+      boxShadow: {
+        custom:
+          "0px 0px 10px 0px rgb(252 114 255 / 0.04), 0px 40px 120px 0px rgb(252 114 255 / 0.12)",
+      },
     },
   },
   plugins: [],
