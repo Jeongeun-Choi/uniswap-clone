@@ -2,6 +2,20 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+@layer components {
+  .connect_button {
+    color: theme("colors.pink-900");
+    background-color: theme("colors.pink-100");
+    font-weight: theme("fontWeight.semibold");
+  }
+
+  .select_button {
+    color: theme("colors.white");
+    background-color: theme("colors.pink-900");
+    font-weight: theme("fontWeight.semibold");
+  }
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
