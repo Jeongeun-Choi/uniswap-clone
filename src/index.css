@@ -27,6 +27,10 @@
   .basic_border {
     @apply border border-solid;
   }
+
+  .basic-search-token-input {
+    @apply w-full text-base font-medium;
+  }
 }
 
 body {
