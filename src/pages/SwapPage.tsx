@@ -5,7 +5,7 @@ import { CommonButton } from "../common/Button";
 import { blockChains } from "../common/data";
 import SwapSection, { Token } from "../components/Section/SwapSection";
 
-const tokenStandard: { [key: string]: number } = {
+export const tokenStandard: { [key: string]: number } = {
   ETH: 1000,
   WBTC: 10000,
   USDC: 1,
@@ -107,7 +107,7 @@ function SwapPage() {
 
         let newSwapToken = {
           ...swapToken,
-          [type]: { ...token, value: newValue },
+          [type]: { ...token, value: newValue.toString() },
         };
         setSwapToken(newSwapToken);
         return;

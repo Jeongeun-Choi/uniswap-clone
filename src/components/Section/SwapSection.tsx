@@ -1,10 +1,10 @@
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { CommonButton } from "../../common/Button";
 import BaseInput from "../../common/Input/BaseInput";
 import SelectTokenModal from "../Modal/SelectTokenModal";
-import { SwapTokenType } from "../../pages/SwapPage";
+import { SwapTokenType, tokenStandard } from "../../pages/SwapPage";
 
 export interface Token {
   id: number;
@@ -31,6 +31,12 @@ function SwapSection({
   onSelectToken,
 }: SwapSectionProps) {
   const [toggle, setToggle] = useState<boolean>(false);
+  const dollar = useMemo(
+    () =>
+      tokenStandard[tokenInfo?.currencyUnit || -1] *
+      parseFloat(tokenInfo?.value || "0"),
+    [tokenInfo?.currencyUnit, tokenInfo?.value]
+  );
 
   const handleToggle = useCallback(() => {
     setToggle((prev) => !prev);
@@ -60,7 +66,7 @@ function SwapSection({
             {tokenInfo?.currencyUnit || "Select token"}
           </CommonButton>
         </div>
-        <span>$0</span>
+        {tokenInfo?.value && <span>${dollar}</span>}
       </section>
       {toggle && (
         <SelectTokenModal
