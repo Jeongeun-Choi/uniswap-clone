@@ -80,6 +80,10 @@ function SwapPage() {
     [standardValues, swapToken, checkIsFloat]
   );
 
+  const handleSwapToken = useCallback(() => {
+    setSwapToken((prev) => ({ pay: prev.receive, receive: prev.pay }));
+  }, []);
+
   const handleSelectToken = useCallback(
     (token: Token, type: SwapTokenType) => {
       // pay와 receive가 같은 토큰을 선택하면 둘의 위치를 바꿔준다...
@@ -165,7 +169,6 @@ function SwapPage() {
           };
         }
       }
-      console.log(newSwapToken);
       setSwapToken(newSwapToken);
     },
     [swapToken]
@@ -197,7 +200,10 @@ function SwapPage() {
                 onChangeInput={handleChangeValue}
                 onSelectToken={handleSelectToken}
               />
-              <div className="flex justify-center items-center border-solid border-4 border-white bg-gray-100 w-[40px] h-[40px] rounded-xl relative z-[2] mx-auto my-[-18px]">
+              <div
+                className="flex justify-center items-center border-solid border-4 border-white bg-gray-100 w-[40px] h-[40px] rounded-xl relative z-[2] mx-auto my-[-18px] cursor-pointer"
+                onClick={handleSwapToken}
+              >
                 <FontAwesomeIcon icon={faArrowDown} />
               </div>
               <SwapSection
