@@ -1,11 +1,8 @@
 import { PropsWithChildren } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEllipsis,
-  faMagnifyingGlass,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { CommonButton, LinkButton } from "../../common/Button";
-import Input from "../Input/Input";
+import SearchInput from "../Input/SearchInput";
 
 const navItems = [
   { title: "Swap", link: "/" },
@@ -31,7 +28,7 @@ function Layout({ children }: PropsWithChildren) {
               </LinkButton>
             </li>
           </ul>
-          <Input
+          <SearchInput
             hasLeftIcon
             placeholder="Search tokens and NFT collections"
             bgColor="bg-gray-100"

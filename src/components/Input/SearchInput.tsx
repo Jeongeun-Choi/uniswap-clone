@@ -1,8 +1,9 @@
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { HTMLAttributes, ReactElement } from "react";
+import { AllHTMLAttributes, ReactElement } from "react";
+import BaseInput from "../../common/Input/BaseInput";
 
-interface InputProps extends HTMLAttributes<HTMLInputElement> {
+interface InputProps extends AllHTMLAttributes<HTMLInputElement> {
   width?: string;
   height?: string;
   customInputClassName?: string;
@@ -13,7 +14,7 @@ interface InputProps extends HTMLAttributes<HTMLInputElement> {
   rightIcon?: ReactElement;
 }
 
-function Input({
+function SearchInput({
   customInputClassName,
   width,
   height,
@@ -22,7 +23,6 @@ function Input({
   hasLeftIcon,
   customLeftIcon,
   rightIcon,
-  placeholder,
   ...rest
 }: InputProps) {
   return (
@@ -37,9 +37,8 @@ function Input({
               className="text-gray-700 mr-1.5"
             />
           ))}
-        <input
-          placeholder={placeholder}
-          className={`outline-0 ${customInputClassName} ${bgColor}`}
+        <BaseInput
+          customInputStyle={`outline-0 ${customInputClassName} ${bgColor}`}
           {...rest}
         />
         {rightIcon}
@@ -48,4 +47,4 @@ function Input({
   );
 }
 
-export default Input;
+export default SearchInput;

@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import BaseModal from "../../common/Modal/BaseModal";
-import Input from "../Input/Input";
+import SearchInput from "../Input/SearchInput";
 import { blockChains } from "../../common/data";
 
 interface SelectTokenModalProps {
@@ -21,7 +21,7 @@ function SelectTokenModal({
       </header>
       <main>
         <div className="pl-5 pb-5 pr-5">
-          <Input
+          <SearchInput
             bgColor="bg-gray-100"
             customInputClassName="basic-search-token-input"
             hasLeftIcon
