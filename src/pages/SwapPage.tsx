@@ -33,6 +33,15 @@ function SwapPage() {
     return [payStandard, receiveStandard];
   }, [swapToken.pay?.currencyUnit, swapToken.receive?.currencyUnit]);
 
+  const checkIsFloat = useCallback((value: string) => {
+    const floatReg = new RegExp(/^[0-9]?.{0,1}[0-9]*$/);
+    if (floatReg.test(value)) {
+      return true;
+    }
+
+    return false;
+  }, []);
+
   const handleChangeValue = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const element = e.target;
@@ -41,7 +50,7 @@ function SwapPage() {
         dataset: { type },
       } = element;
 
-      if (!type) {
+      if (!type || !checkIsFloat(value)) {
         return;
       }
       let newSwapToken = {
@@ -68,7 +77,7 @@ function SwapPage() {
 
       setSwapToken(newSwapToken);
     },
-    [standardValues, swapToken]
+    [standardValues, swapToken, checkIsFloat]
   );
 
   const handleSelectToken = useCallback(
