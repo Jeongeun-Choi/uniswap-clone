@@ -1,45 +1,162 @@
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { CommonButton } from "../common/Button";
+import { blockChains } from "../common/data";
 import SwapSection, { Token } from "../components/Section/SwapSection";
-import { ChangeEvent, useCallback, useState } from "react";
+
+const tokenStandard: { [key: string]: number } = {
+  ETH: 1000,
+  WBTC: 10000,
+  USDC: 1,
+};
+
+const baseSwapToken = {
+  pay: { ...blockChains[0], value: "" },
+  receive: null,
+};
 
 export type SwapTokenType = "pay" | "receive";
 
 interface SwapToken {
-  pay: (Token & { value: "" }) | null;
-  receive: (Token & { value: "" }) | null;
+  pay: Token | null;
+  receive: Token | null;
 }
 
 function SwapPage() {
-  const [swapToken, setSwapToken] = useState<SwapToken>({
-    pay: null,
-    receive: null,
-  });
+  const [swapToken, setSwapToken] = useState<SwapToken>(baseSwapToken);
+  const standardValues = useMemo(() => {
+    const payStandard = tokenStandard[swapToken.pay?.currencyUnit || -1] || 0;
+    const receiveStandard =
+      tokenStandard[swapToken.receive?.currencyUnit || -1];
 
-  const handleChangeValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const element = e.target;
-    const {
-      value,
-      dataset: { type },
-    } = element;
+    return [payStandard, receiveStandard];
+  }, [swapToken.pay?.currencyUnit, swapToken.receive?.currencyUnit]);
 
-    if (!type) {
-      return;
-    }
+  const handleChangeValue = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const element = e.target;
+      const {
+        value,
+        dataset: { type },
+      } = element;
 
-    setSwapToken((prev) => ({
-      ...prev,
-      [type]: { ...prev[type as SwapTokenType], value },
-    }));
-  }, []);
+      if (!type) {
+        return;
+      }
+      let newSwapToken = {
+        ...swapToken,
+        [type]: { ...swapToken[type as SwapTokenType], value },
+      };
 
-  const handleSelectToken = useCallback((token: Token, type: string) => {
-    setSwapToken((prev) => ({
-      ...prev,
-      [type]: { ...prev[type as SwapTokenType], ...token },
-    }));
-  }, []);
+      // pay, receive 둘 다 null이 아닐 경우에는 onChange 될 때마다 swap해준다.
+      if (swapToken.pay && swapToken.receive) {
+        const [payStandard, receiveStandard] = standardValues;
+        const ratio =
+          type === "pay"
+            ? payStandard / receiveStandard
+            : receiveStandard / payStandard;
+
+        const newValue = ratio * parseInt(value, 10);
+        const otherTokenType = type === "pay" ? "receive" : "pay";
+
+        newSwapToken = {
+          ...newSwapToken,
+          [otherTokenType]: { ...swapToken[otherTokenType], value: newValue },
+        };
+      }
+
+      setSwapToken(newSwapToken);
+    },
+    [standardValues, swapToken]
+  );
+
+  const handleSelectToken = useCallback(
+    (token: Token, type: SwapTokenType) => {
+      // pay와 receive가 같은 토큰을 선택하면 둘의 위치를 바꿔준다...
+      switch (type) {
+        case "pay": {
+          if (swapToken.receive?.id === token.id) {
+            setSwapToken({ pay: swapToken.receive, receive: swapToken.pay });
+            return;
+          }
+          break;
+        }
+        case "receive": {
+          if (swapToken.pay?.id === token.id) {
+            setSwapToken({ pay: swapToken.receive, receive: swapToken.pay });
+            return;
+          }
+          break;
+        }
+        default:
+          break;
+      }
+
+      const otherTokenType: SwapTokenType = type === "pay" ? "receive" : "pay";
+      const selectedToken = swapToken[type as SwapTokenType];
+      const otherToken = swapToken[otherTokenType];
+
+      // pay의 value가 있고 receive의 value가 없을 때 => pay * ratio를 해줘야함... ratio부터 달라질듯
+      if (!selectedToken) {
+        const selectedTokenStandard = tokenStandard[token.currencyUnit];
+        const otherTokenStandard =
+          tokenStandard[otherToken?.currencyUnit || -1];
+        const ratio = otherTokenStandard / selectedTokenStandard;
+        const newValue = ratio * parseInt(otherToken?.value || "0", 10);
+
+        let newSwapToken = {
+          ...swapToken,
+          [type]: { ...token, value: newValue },
+        };
+        setSwapToken(newSwapToken);
+        return;
+      }
+
+      let newSwapToken = {
+        ...swapToken,
+      };
+
+      switch (type) {
+        case "pay": {
+          const payStandard = tokenStandard[token.currencyUnit];
+          const receiveStandard =
+            tokenStandard[swapToken.receive?.currencyUnit || -1];
+
+          const ratio = payStandard / receiveStandard;
+          const newValue = ratio * parseInt(swapToken.pay?.value || "0", 10);
+          const newPayToken = { ...(swapToken.pay as Token), ...token };
+          const newReceiveToken = {
+            ...(swapToken.receive as Token),
+            value: newValue.toString(),
+          };
+          newSwapToken = {
+            pay: newPayToken,
+            receive: newReceiveToken,
+          };
+          break;
+        }
+        case "receive": {
+          const payStandard = tokenStandard[swapToken.pay?.currencyUnit || -1];
+          const receiveStandard = tokenStandard[token.currencyUnit];
+
+          const ratio = payStandard / receiveStandard;
+          const newValue = ratio * parseInt(swapToken.pay?.value || "0", 10);
+          const newPayToken = swapToken.pay;
+          const newReceiveToken = {
+            ...token,
+            value: newValue.toString(),
+          };
+          newSwapToken = {
+            pay: newPayToken,
+            receive: newReceiveToken,
+          };
+        }
+      }
+      setSwapToken(newSwapToken);
+    },
+    [swapToken]
+  );
 
   return (
     <>

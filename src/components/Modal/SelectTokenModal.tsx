@@ -11,7 +11,7 @@ interface SelectTokenModalProps {
   title?: string;
   hasCloseBtn?: boolean;
   type: SwapTokenType;
-  onSelectToken: (token: Token, type: string) => void;
+  onSelectToken: (token: Token, type: SwapTokenType) => void;
   onCloseModal: () => void;
 }
 

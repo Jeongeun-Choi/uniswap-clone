@@ -10,15 +10,16 @@ export interface Token {
   id: number;
   name: string;
   currencyUnit: string;
+  value?: string;
 }
 
 interface SwapSectionProps {
   title: string;
   inputValue: string;
-  tokenInfo: (Token & { value: "" }) | null;
+  tokenInfo: Token | null;
   type: SwapTokenType;
   onChangeInput?: (e: ChangeEvent<HTMLInputElement>) => void;
-  onSelectToken: (token: Token, type: string) => void;
+  onSelectToken: (token: Token, type: SwapTokenType) => void;
 }
 
 function SwapSection({
