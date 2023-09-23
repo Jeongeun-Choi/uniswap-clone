@@ -66,7 +66,7 @@ function SwapSection({
             {tokenInfo?.currencyUnit || "Select token"}
           </CommonButton>
         </div>
-        {tokenInfo?.value && <span>${dollar}</span>}
+        {parseFloat(tokenInfo?.value || "") > 0 && <span>${dollar}</span>}
       </section>
       {toggle && (
         <SelectTokenModal

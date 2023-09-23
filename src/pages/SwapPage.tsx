@@ -98,7 +98,7 @@ function SwapPage() {
       const otherToken = swapToken[otherTokenType];
 
       // pay의 value가 있고 receive의 value가 없을 때 => pay * ratio를 해줘야함... ratio부터 달라질듯
-      if (!selectedToken) {
+      if (!selectedToken?.value) {
         const selectedTokenStandard = tokenStandard[token.currencyUnit];
         const otherTokenStandard =
           tokenStandard[otherToken?.currencyUnit || -1];
@@ -107,7 +107,10 @@ function SwapPage() {
 
         let newSwapToken = {
           ...swapToken,
-          [type]: { ...token, value: newValue.toString() },
+          [type]: {
+            ...token,
+            value: isNaN(newValue) ? "" : newValue.toString(),
+          },
         };
         setSwapToken(newSwapToken);
         return;
@@ -153,6 +156,7 @@ function SwapPage() {
           };
         }
       }
+      console.log(newSwapToken);
       setSwapToken(newSwapToken);
     },
     [swapToken]
