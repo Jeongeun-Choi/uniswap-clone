@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, useCallback, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { CommonButton } from "../common/Button";
@@ -57,7 +57,7 @@ function SwapPage() {
             ? payStandard / receiveStandard
             : receiveStandard / payStandard;
 
-        const newValue = ratio * parseInt(value, 10);
+        const newValue = ratio * parseFloat(value);
         const otherTokenType = type === "pay" ? "receive" : "pay";
 
         newSwapToken = {
@@ -103,7 +103,7 @@ function SwapPage() {
         const otherTokenStandard =
           tokenStandard[otherToken?.currencyUnit || -1];
         const ratio = otherTokenStandard / selectedTokenStandard;
-        const newValue = ratio * parseInt(otherToken?.value || "0", 10);
+        const newValue = ratio * parseFloat(otherToken?.value || "0");
 
         let newSwapToken = {
           ...swapToken,
@@ -124,7 +124,7 @@ function SwapPage() {
             tokenStandard[swapToken.receive?.currencyUnit || -1];
 
           const ratio = payStandard / receiveStandard;
-          const newValue = ratio * parseInt(swapToken.pay?.value || "0", 10);
+          const newValue = ratio * parseFloat(swapToken.pay?.value || "0");
           const newPayToken = { ...(swapToken.pay as Token), ...token };
           const newReceiveToken = {
             ...(swapToken.receive as Token),
@@ -141,7 +141,7 @@ function SwapPage() {
           const receiveStandard = tokenStandard[token.currencyUnit];
 
           const ratio = payStandard / receiveStandard;
-          const newValue = ratio * parseInt(swapToken.pay?.value || "0", 10);
+          const newValue = ratio * parseFloat(swapToken.pay?.value || "0");
           const newPayToken = swapToken.pay;
           const newReceiveToken = {
             ...token,
