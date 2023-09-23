@@ -32,12 +32,12 @@ function Layout({ children }: PropsWithChildren) {
             </li>
           </ul>
           <Input
-            leftIcon={
-              <FontAwesomeIcon
-                icon={faMagnifyingGlass}
-                className="text-gray-700 mr-1.5"
-              />
-            }
+            hasLeftIcon
+            placeholder="Search tokens and NFT collections"
+            bgColor="bg-gray-100"
+            borderColor="border-gray-200"
+            width="w-[480px]"
+            customInputClassName="basic-search-token-input"
           />
           <div className="flex">
             <div className="text-blue-500 text-xl font-bold">드롭다운</div>
