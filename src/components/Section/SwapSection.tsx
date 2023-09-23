@@ -15,9 +15,10 @@ export interface Token {
 interface SwapSectionProps {
   title: string;
   inputValue: string;
-  tokenInfo?: Token;
+  tokenInfo: (Token & { value: "" }) | null;
   type: SwapTokenType;
   onChangeInput?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onSelectToken: (token: Token, type: string) => void;
 }
 
 function SwapSection({
@@ -26,6 +27,7 @@ function SwapSection({
   tokenInfo,
   type,
   onChangeInput,
+  onSelectToken,
 }: SwapSectionProps) {
   const [toggle, setToggle] = useState<boolean>(false);
 
@@ -55,7 +57,14 @@ function SwapSection({
         </div>
         <span>$0</span>
       </section>
-      {toggle && <SelectTokenModal title="Select a Token" />}
+      {toggle && (
+        <SelectTokenModal
+          title="Select a Token"
+          type={type}
+          onSelectToken={onSelectToken}
+          onCloseModal={handleToggle}
+        />
+      )}
     </>
   );
 }

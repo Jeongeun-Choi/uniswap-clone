@@ -34,6 +34,13 @@ function SwapPage() {
     }));
   }, []);
 
+  const handleSelectToken = useCallback((token: Token, type: string) => {
+    setSwapToken((prev) => ({
+      ...prev,
+      [type]: { ...prev[type as SwapTokenType], ...token },
+    }));
+  }, []);
+
   return (
     <>
       <div className="w-full flex justify-center">
@@ -55,8 +62,10 @@ function SwapPage() {
               <SwapSection
                 title="You pay"
                 inputValue={swapToken.pay?.value || ""}
+                tokenInfo={swapToken.pay}
                 type="pay"
                 onChangeInput={handleChangeValue}
+                onSelectToken={handleSelectToken}
               />
               <div className="flex justify-center items-center border-solid border-4 border-white bg-gray-100 w-[40px] h-[40px] rounded-xl relative z-[2] mx-auto my-[-18px]">
                 <FontAwesomeIcon icon={faArrowDown} />
@@ -64,8 +73,10 @@ function SwapPage() {
               <SwapSection
                 title="You receive"
                 inputValue={swapToken.receive?.value || ""}
+                tokenInfo={swapToken.receive}
                 type="receive"
                 onChangeInput={handleChangeValue}
+                onSelectToken={handleSelectToken}
               />
             </article>
             <CommonButton customClassName="connect_button text-xl w-full p-4 rounded-2xl mt-1">
