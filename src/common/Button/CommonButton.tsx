@@ -1,6 +1,6 @@
-import { PropsWithChildren, ReactElement } from "react";
+import { HTMLAttributes, PropsWithChildren, ReactElement } from "react";
 
-interface CommonButtonProps {
+interface CommonButtonProps extends HTMLAttributes<HTMLButtonElement> {
   customClassName?: string;
   leftIcon?: ReactElement;
   rightIcon?: ReactElement;
@@ -12,9 +12,10 @@ function CommonButton({
   rightIcon,
   leftIcon,
   children,
+  ...rest
 }: PropsWithChildren<CommonButtonProps>) {
   return (
-    <button className={commonClassName + customClassName}>
+    <button className={commonClassName + customClassName} {...rest}>
       {rightIcon}
       {children}
       {leftIcon}
