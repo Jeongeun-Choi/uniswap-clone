@@ -1,10 +1,39 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { CommonButton } from "../common/Button";
-import SwapSection from "../components/Section/SwapSection";
-import SelectTokenModal from "../components/Modal/SelectTokenModal";
+import SwapSection, { Token } from "../components/Section/SwapSection";
+import { ChangeEvent, useCallback, useState } from "react";
+
+export type SwapTokenType = "pay" | "receive";
+
+interface SwapToken {
+  pay: (Token & { value: "" }) | null;
+  receive: (Token & { value: "" }) | null;
+}
 
 function SwapPage() {
+  const [swapToken, setSwapToken] = useState<SwapToken>({
+    pay: null,
+    receive: null,
+  });
+
+  const handleChangeValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const element = e.target;
+    const {
+      value,
+      dataset: { type },
+    } = element;
+
+    if (!type) {
+      return;
+    }
+
+    setSwapToken((prev) => ({
+      ...prev,
+      [type]: { ...prev[type as SwapTokenType], value },
+    }));
+  }, []);
+
   return (
     <>
       <div className="w-full flex justify-center">
@@ -23,14 +52,20 @@ function SwapPage() {
               </div>
             </header>
             <article>
-              <SwapSection title="You pay" value="" onChangeInput={() => {}} />
+              <SwapSection
+                title="You pay"
+                inputValue={swapToken.pay?.value || ""}
+                type="pay"
+                onChangeInput={handleChangeValue}
+              />
               <div className="flex justify-center items-center border-solid border-4 border-white bg-gray-100 w-[40px] h-[40px] rounded-xl relative z-[2] mx-auto my-[-18px]">
                 <FontAwesomeIcon icon={faArrowDown} />
               </div>
               <SwapSection
                 title="You receive"
-                value=""
-                onChangeInput={() => {}}
+                inputValue={swapToken.receive?.value || ""}
+                type="receive"
+                onChangeInput={handleChangeValue}
               />
             </article>
             <CommonButton customClassName="connect_button text-xl w-full p-4 rounded-2xl mt-1">
@@ -39,7 +74,6 @@ function SwapPage() {
           </main>
         </div>
       </div>
-      <SelectTokenModal title="Select a Token" />
     </>
   );
 }
