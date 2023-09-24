@@ -4,8 +4,7 @@ import BaseModal from "../../common/Modal/BaseModal";
 import SearchInput from "../Input/SearchInput";
 import { blockChains } from "../../common/data";
 import { MouseEvent, useCallback } from "react";
-import { Token } from "../Section/SwapSection";
-import { SwapTokenType } from "../../pages/SwapPage";
+import { SwapTokenType, Token } from "../../common/types";
 
 interface SelectTokenModalProps {
   title?: string;

@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDown, faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { CommonButton, LinkButton } from "../../common/Button";
 import SearchInput from "../Input/SearchInput";
 
@@ -37,7 +37,12 @@ function Layout({ children }: PropsWithChildren) {
             customInputClassName="basic-search-token-input"
           />
           <div className="flex">
-            <div className="text-blue-500 text-xl font-bold">드롭다운</div>
+            <div className="flex items-center mr-3 hover:bg-gray-100 rounded-2xl px-1.5 py-[1px] cursor-pointer rounded-[20px]">
+              <div>사진</div>
+              <CommonButton
+                rightIcon={<FontAwesomeIcon icon={faAngleDown} />}
+              />
+            </div>
             <CommonButton customClassName="connect_button px-3 py-2.5 rounded-full text-medium">
               Connect
             </CommonButton>

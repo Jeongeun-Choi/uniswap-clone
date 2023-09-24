@@ -4,14 +4,8 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { CommonButton } from "../../common/Button";
 import BaseInput from "../../common/Input/BaseInput";
 import SelectTokenModal from "../Modal/SelectTokenModal";
-import { SwapTokenType, tokenStandard } from "../../pages/SwapPage";
-
-export interface Token {
-  id: number;
-  name: string;
-  currencyUnit: string;
-  value?: string;
-}
+import { defaultCurrencyUnit, tokenStandard } from "../../constants/constants";
+import { SwapTokenType, Token } from "../../common/types";
 
 interface SwapSectionProps {
   title: string;
@@ -33,7 +27,7 @@ function SwapSection({
   const [toggle, setToggle] = useState<boolean>(false);
   const dollar = useMemo(
     () =>
-      tokenStandard[tokenInfo?.currencyUnit || -1] *
+      tokenStandard[tokenInfo?.currencyUnit || defaultCurrencyUnit] *
       parseFloat(tokenInfo?.value || "0"),
     [tokenInfo?.currencyUnit, tokenInfo?.value]
   );
