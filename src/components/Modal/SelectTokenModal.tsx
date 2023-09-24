@@ -1,9 +1,7 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { MouseEvent, useCallback } from "react";
 import BaseModal from "../../common/Modal/BaseModal";
 import SearchInput from "../Input/SearchInput";
 import { blockChains } from "../../common/data";
-import { MouseEvent, useCallback } from "react";
 import { SwapTokenType, Token } from "../../common/types";
 
 interface SelectTokenModalProps {
@@ -23,6 +21,7 @@ function SelectTokenModal({
 }: SelectTokenModalProps) {
   const handleClickToken = useCallback(
     (e: MouseEvent<HTMLLIElement>) => {
+      e.stopPropagation();
       const { id } = e.currentTarget;
 
       if (!id) {
@@ -40,11 +39,13 @@ function SelectTokenModal({
   );
 
   return (
-    <BaseModal width="w-[420px]" height="h-[684px]">
-      <header className="flex_between p-5">
-        <div>{title}</div>
-        {hasCloseBtn && <FontAwesomeIcon icon={faXmark} className="w-5 h-5" />}
-      </header>
+    <BaseModal
+      width="w-[420px]"
+      height="h-[684px]"
+      title={title}
+      hasCloseBtn={hasCloseBtn}
+      onCloseModal={onCloseModal}
+    >
       <main>
         <div className="pl-5 pb-5 pr-5">
           <SearchInput
