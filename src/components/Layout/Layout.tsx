@@ -34,7 +34,7 @@ function Layout({ children }: PropsWithChildren) {
             bgColor="bg-gray-100"
             borderColor="border-gray-200"
             width="w-[480px]"
-            customInputClassName="basic-search-token-input"
+            className="px-4 py-3 basic_border rounded-[12px]"
           />
           <div className="flex">
             <div className="flex items-center mr-3 hover:bg-gray-100 rounded-2xl px-1.5 py-[1px] cursor-pointer rounded-[20px]">

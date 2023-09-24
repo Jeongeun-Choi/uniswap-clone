@@ -43,7 +43,7 @@ function SwapSection({
         <div className="flex_between">
           <BaseInput
             data-type={type}
-            customInputStyle="flex grow w-0 bg-gray-100 text-4xl text-gray-900 outline-0"
+            className="flex grow w-0 bg-gray-100 text-4xl text-gray-900 outline-0"
             placeholder="0"
             value={inputValue}
             onChange={onChangeInput}

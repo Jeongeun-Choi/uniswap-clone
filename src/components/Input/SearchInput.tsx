@@ -1,12 +1,12 @@
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { AllHTMLAttributes, ReactElement } from "react";
+import { ReactElement } from "react";
 import BaseInput from "../../common/Input/BaseInput";
+import { BaseInputProps } from "../../common/Input/types";
 
-interface InputProps extends AllHTMLAttributes<HTMLInputElement> {
+interface InputProps extends BaseInputProps {
   width?: string;
   height?: string;
-  customInputClassName?: string;
   borderColor?: string;
   bgColor?: string;
   hasLeftIcon?: boolean;
@@ -15,7 +15,7 @@ interface InputProps extends AllHTMLAttributes<HTMLInputElement> {
 }
 
 function SearchInput({
-  customInputClassName,
+  className,
   width,
   height,
   borderColor,
@@ -27,7 +27,7 @@ function SearchInput({
 }: InputProps) {
   return (
     <div
-      className={`px-4 py-3 basic_border rounded-[12px] ${width} ${height} ${borderColor} ${bgColor}`}
+      className={`${className} ${width} ${height} ${borderColor} ${bgColor}`}
     >
       <div className="flex items-center">
         {hasLeftIcon &&
@@ -38,7 +38,7 @@ function SearchInput({
             />
           ))}
         <BaseInput
-          customInputStyle={`outline-0 ${customInputClassName} ${bgColor}`}
+          className={`outline-0 basic-search-token-input ${bgColor}`}
           {...rest}
         />
         {rightIcon}

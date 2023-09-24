@@ -1,11 +1,7 @@
-import { AllHTMLAttributes } from "react";
+import { BaseInputProps } from "./types";
 
-interface BaseInputProps extends AllHTMLAttributes<HTMLInputElement> {
-  customInputStyle?: string;
-}
-
-function BaseInput({ customInputStyle, ...rest }: BaseInputProps) {
-  return <input className={customInputStyle} {...rest} />;
+function BaseInput({ className, ...rest }: BaseInputProps) {
+  return <input className={className} {...rest} />;
 }
 
 export default BaseInput;

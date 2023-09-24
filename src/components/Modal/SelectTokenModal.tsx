@@ -50,9 +50,9 @@ function SelectTokenModal({
         <div className="pl-5 pb-5 pr-5">
           <SearchInput
             bgColor="bg-gray-100"
-            customInputClassName="basic-search-token-input"
             hasLeftIcon
             placeholder="Search name or paste address"
+            className="px-4 py-3 basic_border rounded-[12px]"
           />
           <ul className="grid grid-cols-3 gap-2 mt-3">
             {blockChains.map((blockChain) => (
