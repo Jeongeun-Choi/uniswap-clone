@@ -222,7 +222,7 @@ function SwapPage() {
                 onSelectToken={handleSelectToken}
               />
             </article>
-            <CommonButton customClassName="connect_button text-xl w-full p-4 rounded-2xl mt-1">
+            <CommonButton className="connect_button text-xl w-full p-4 rounded-2xl mt-1">
               Connect Wallet
             </CommonButton>
           </main>

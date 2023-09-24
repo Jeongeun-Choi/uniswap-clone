@@ -19,11 +19,11 @@ function Layout({ children }: PropsWithChildren) {
           <ul className="flex">
             {navItems.map((nav) => (
               <li key={nav.title}>
-                <LinkButton customClassName="px-3 py-2">{nav.title}</LinkButton>
+                <LinkButton className="px-3 py-2">{nav.title}</LinkButton>
               </li>
             ))}
             <li>
-              <LinkButton customClassName="px-3 py-2">
+              <LinkButton className="px-3 py-2">
                 <FontAwesomeIcon icon={faEllipsis} />
               </LinkButton>
             </li>
@@ -43,7 +43,7 @@ function Layout({ children }: PropsWithChildren) {
                 rightIcon={<FontAwesomeIcon icon={faAngleDown} />}
               />
             </div>
-            <CommonButton customClassName="connect_button px-3 py-2.5 rounded-full text-medium">
+            <CommonButton className="connect_button px-3 py-2.5 rounded-full text-medium">
               Connect
             </CommonButton>
           </div>

@@ -1,17 +1,14 @@
 import { PropsWithChildren } from "react";
-
-interface LinkButtonProps {
-  customClassName?: string;
-}
+import { BaseButtonProps } from "./types";
 
 const commonClassName =
   "text-gray-700 hover:bg-gray-100 rounded-2xl text-center text-base ";
 function LinkButton({
-  customClassName = "px-3 py-3",
+  className = "px-3 py-3",
   children,
-}: PropsWithChildren<LinkButtonProps>) {
+}: PropsWithChildren<BaseButtonProps>) {
   return (
-    <button className={commonClassName + customClassName}>{children}</button>
+    <button className={`${commonClassName} ${className}`}>{children}</button>
   );
 }
 
