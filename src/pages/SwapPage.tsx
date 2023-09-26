@@ -2,7 +2,7 @@ import { ChangeEvent, useCallback, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { CommonButton } from "../common/Button";
-import { blockChains } from "../common/data";
+import { tokenList } from "../common/data";
 import SwapSection from "../components/Section/SwapSection";
 import { defaultCurrencyUnit, tokenStandard } from "../constants/constants";
 import { CurrencyUnit, SwapToken, SwapTokenType, Token } from "../common/types";
@@ -14,7 +14,7 @@ const baseToken = {
 };
 
 const baseSwapToken = {
-  pay: { ...blockChains[0], value: "" },
+  pay: { ...tokenList[0], value: "" },
   receive: null,
 };
 
