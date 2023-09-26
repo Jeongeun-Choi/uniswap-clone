@@ -1,11 +1,11 @@
-import { ChangeEvent, MouseEvent, useCallback, useMemo, useState } from "react";
+import { MouseEvent, useCallback, useMemo } from "react";
 import BaseModal from "../../common/Modal/BaseModal";
 import SearchInput from "../Input/SearchInput";
 import { SwapTokenType, Token } from "../../common/types";
 import { tokenList } from "../../common/data";
 import TokenItem from "../TokenItem";
 import TokenBadge from "../Badge";
-import { useDebounce } from "../../hooks";
+import { useDebounce, useSearchText } from "../../hooks";
 import { BaseModalProps } from "../../common/Modal/types";
 
 interface SelectTokenModalProps extends BaseModalProps {
@@ -22,7 +22,7 @@ function SelectTokenModal({
   onSelectToken,
   onCloseModal,
 }: SelectTokenModalProps) {
-  const [searchText, setSearchText] = useState<string>("");
+  const { searchText, changeSearchText } = useSearchText("");
   const debounceSearchText = useDebounce(searchText, 200);
 
   const searchTokenList = tokenList.filter((token) =>
@@ -50,9 +50,6 @@ function SelectTokenModal({
     },
     [onCloseModal, onSelectToken, type]
   );
-  const handleSearchToken = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
-  }, []);
 
   return (
     <BaseModal
@@ -69,7 +66,7 @@ function SelectTokenModal({
             hasLeftIcon
             placeholder="Search name or paste address"
             className="px-4 py-3 basic_border rounded-[12px]"
-            onChange={handleSearchToken}
+            onChange={changeSearchText}
           />
           <ul className="flex flex-wrap my-3">
             {tokenList.map((token) => (
