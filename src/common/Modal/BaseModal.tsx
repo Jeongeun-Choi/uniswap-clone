@@ -1,6 +1,12 @@
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { MouseEvent, PropsWithChildren, useCallback, useRef } from "react";
+import {
+  MouseEvent,
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react";
 import { BaseModalProps } from "./types";
 
 function BaseModal({
@@ -29,6 +35,18 @@ function BaseModal({
     },
     [canCloseClickOutside, onCloseModal]
   );
+
+  useEffect(() => {
+    const escCloseModal = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onCloseModal();
+      }
+    };
+    if (modalRef.current) {
+      document.addEventListener("keydown", escCloseModal);
+    }
+    return () => document.removeEventListener("keydown", escCloseModal);
+  }, [onCloseModal]);
 
   return (
     <div
