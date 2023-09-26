@@ -40,7 +40,7 @@ function Layout({ children }: PropsWithChildren) {
             bgColor="bg-white"
             borderColor="border-gray-200"
             width="w-[480px]"
-            className="px-3 py-2 basic_border rounded-2xl"
+            className="px-4 py-3 basic_border rounded-2xl"
           />
           <div className="justify-self-end flex">
             <div className="flex items-center gap-2 mr-3 hover:bg-gray-100 rounded-2xl px-1.5 py-px cursor-pointer rounded-[20px]">

@@ -5,10 +5,10 @@ import { InputProps } from "./types";
 
 function SearchInput({
   className,
-  width,
-  height,
-  borderColor,
-  bgColor,
+  width = "",
+  height = "",
+  borderColor = "",
+  bgColor = "",
   hasLeftIcon,
   customLeftIcon,
   rightIcon,
