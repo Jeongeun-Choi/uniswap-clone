@@ -1,10 +1,11 @@
-import { MouseEvent, useCallback } from "react";
+import { ChangeEvent, MouseEvent, useCallback, useMemo, useState } from "react";
 import BaseModal from "../../common/Modal/BaseModal";
 import SearchInput from "../Input/SearchInput";
 import { SwapTokenType, Token } from "../../common/types";
 import { tokenList } from "../../common/data";
 import TokenItem from "../TokenItem";
 import TokenBadge from "../Badge";
+import { useDebounce } from "../../hooks";
 
 interface SelectTokenModalProps {
   title?: string;
@@ -23,6 +24,16 @@ function SelectTokenModal({
   onSelectToken,
   onCloseModal,
 }: SelectTokenModalProps) {
+  const [searchText, setSearchText] = useState<string>("");
+  const debounceSearchText = useDebounce(searchText, 200);
+
+  const searchTokenList = tokenList.filter((token) =>
+    token.name.toLowerCase().includes(debounceSearchText.toLowerCase())
+  );
+  const isEmptyTokenList = useMemo(
+    () => (searchTokenList.length === 0 ? true : false),
+    [searchTokenList]
+  );
   const handleClickToken = useCallback(
     (e: MouseEvent<HTMLLIElement>) => {
       e.stopPropagation();
@@ -41,6 +52,9 @@ function SelectTokenModal({
     },
     [onCloseModal, onSelectToken, type]
   );
+  const handleSearchToken = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  }, []);
 
   return (
     <BaseModal
@@ -57,6 +71,7 @@ function SelectTokenModal({
             hasLeftIcon
             placeholder="Search name or paste address"
             className="px-4 py-3 basic_border rounded-[12px]"
+            onChange={handleSearchToken}
           />
           <ul className="flex flex-wrap my-3">
             {tokenList.map((token) => (
@@ -69,14 +84,18 @@ function SelectTokenModal({
           </ul>
         </div>
         <hr />
-        <ul>
-          {tokenList.map((token) => (
-            <TokenItem
-              token={token}
-              isSelected={selectedToken?.id === token.id}
-              onClickToken={handleClickToken}
-            />
-          ))}
+        <ul className={isEmptyTokenList ? "flex justify-center pt-5" : ""}>
+          {isEmptyTokenList ? (
+            <div>No results found.</div>
+          ) : (
+            searchTokenList.map((token) => (
+              <TokenItem
+                token={token}
+                isSelected={selectedToken?.id === token.id}
+                onClickToken={handleClickToken}
+              />
+            ))
+          )}
         </ul>
       </main>
     </BaseModal>
