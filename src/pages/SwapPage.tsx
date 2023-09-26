@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { CommonButton } from "../common/Button";
 import { tokenList } from "../common/data";
-import SwapSection from "../components/Section/SwapSection";
+import { SwapSection } from "../components/Section";
 import { defaultCurrencyUnit, tokenStandard } from "../constants/constants";
 import { CurrencyUnit, SwapToken, SwapTokenType, Token } from "../common/types";
 

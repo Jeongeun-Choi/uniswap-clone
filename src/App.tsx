@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import Layout from "./components/Layout/Layout";
+import Layout from "./components/Layout";
 import SwapPage from "./pages/SwapPage";
 
 function App({ children }: PropsWithChildren) {

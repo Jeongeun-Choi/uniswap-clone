@@ -2,7 +2,7 @@ import { PropsWithChildren } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { CommonButton, LinkButton } from "../../common/Button";
-import SearchInput from "../Input/SearchInput";
+import { SearchInput } from "../Input";
 import { IconEthLogo, IconUniswapLogo } from "../../common/Icons";
 
 const navItems = [

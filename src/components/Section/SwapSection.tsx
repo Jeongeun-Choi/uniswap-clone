@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { CommonButton } from "../../common/Button";
 import BaseInput from "../../common/Input/BaseInput";
-import SelectTokenModal from "../Modal/SelectTokenModal";
+import { SelectTokenModal } from "../Modal";
 import { defaultCurrencyUnit, tokenStandard } from "../../constants/constants";
 import { SwapTokenType, Token } from "../../common/types";
 
