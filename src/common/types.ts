@@ -1,9 +1,12 @@
+import { BaseIconProps } from "./Icons/types";
+
 export type CurrencyUnit = "ETH" | "WBTC" | "USDC";
 
 export interface Token {
   id: number;
   name: string;
   currencyUnit: CurrencyUnit;
+  Icon?: ({ width, height }: BaseIconProps) => JSX.Element;
   value?: string;
 }
 
