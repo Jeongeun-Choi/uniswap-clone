@@ -13,7 +13,7 @@ function TokenBadge({ token, isSelected, onClickToken }: TokenBadgeProps) {
       key={token.id}
       id={token.id.toString()}
       className={`${
-        isSelected && "bg-gray-200"
+        isSelected && "bg-gray-200 pointer-events-none"
       } flex w-fit m-1 py-[5px] pl-1.5 pr-3 rounded-[18px] basic_border border-gray-300 hover:bg-gray-100 cursor-pointer`}
       onClick={onClickToken}
     >
