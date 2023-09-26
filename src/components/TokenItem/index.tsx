@@ -1,15 +1,8 @@
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Token } from "../../common/types";
-import { MouseEvent } from "react";
+import { SelectTokenProps } from "../../common/types";
 
-interface TokenItemProps {
-  token: Token;
-  isSelected: boolean;
-  onClickToken: (e: MouseEvent<HTMLLIElement>) => void;
-}
-
-function TokenItem({ token, isSelected, onClickToken }: TokenItemProps) {
+function TokenItem({ token, isSelected, onClickToken }: SelectTokenProps) {
   return (
     <li
       key={token.id}

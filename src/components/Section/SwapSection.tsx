@@ -1,21 +1,12 @@
-import { ChangeEvent, useMemo } from "react";
+import { useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { CommonButton } from "../../common/Button";
 import BaseInput from "../../common/Input/BaseInput";
 import { SelectTokenModal } from "../Modal";
 import { defaultCurrencyUnit, tokenStandard } from "../../constants/constants";
-import { SwapTokenType, Token } from "../../common/types";
 import { useToggle } from "../../hooks";
-
-interface SwapSectionProps {
-  title: string;
-  inputValue: string;
-  tokenInfo: Token | null;
-  type: SwapTokenType;
-  onChangeInput?: (e: ChangeEvent<HTMLInputElement>) => void;
-  onSelectToken: (token: Token, type: SwapTokenType) => void;
-}
+import { SwapSectionProps } from "./types";
 
 const selectedButtonStyle =
   "flex items-center ml-3 py-1 pl-1 pr-2 rounded-[18px] text-black text-xl basic_border border-gray-200 bg-white hover:bg-gray-100 cursor-pointer shadow-[0px_0px_10px_0px_rgba(34,34,34,0.04)]";

@@ -1,13 +1,6 @@
-import { MouseEvent } from "react";
-import { Token } from "../../common/types";
+import { SelectTokenProps } from "../../common/types";
 
-interface TokenBadgeProps {
-  token: Token;
-  isSelected: boolean;
-  onClickToken: (e: MouseEvent<HTMLLIElement>) => void;
-}
-
-function TokenBadge({ token, isSelected, onClickToken }: TokenBadgeProps) {
+function TokenBadge({ token, isSelected, onClickToken }: SelectTokenProps) {
   return (
     <li
       key={token.id}

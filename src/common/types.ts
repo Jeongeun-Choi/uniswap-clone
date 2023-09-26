@@ -1,3 +1,4 @@
+import { MouseEvent } from "react";
 import { BaseIconProps } from "./Icons/types";
 
 export type CurrencyUnit = "ETH" | "WBTC" | "USDC";
@@ -21,3 +22,12 @@ const swapTokenType = {
 } as const;
 
 export type SwapTokenType = (typeof swapTokenType)[keyof typeof swapTokenType];
+
+/**
+ * TokenBadge, TokenItem Props에서 사용하는 공통 타입.
+ */
+export interface SelectTokenProps {
+  token: Token;
+  isSelected: boolean;
+  onClickToken: (e: MouseEvent<HTMLLIElement>) => void;
+}

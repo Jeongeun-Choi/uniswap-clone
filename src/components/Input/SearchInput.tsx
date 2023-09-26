@@ -1,18 +1,7 @@
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ReactElement } from "react";
 import BaseInput from "../../common/Input/BaseInput";
-import { BaseInputProps } from "../../common/Input/types";
-
-interface InputProps extends BaseInputProps {
-  width?: string;
-  height?: string;
-  borderColor?: string;
-  bgColor?: string;
-  hasLeftIcon?: boolean;
-  customLeftIcon?: ReactElement;
-  rightIcon?: ReactElement;
-}
+import { InputProps } from "./types";
 
 function SearchInput({
   className,

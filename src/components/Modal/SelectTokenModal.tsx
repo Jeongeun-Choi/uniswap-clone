@@ -1,18 +1,11 @@
 import { MouseEvent, useCallback, useMemo } from "react";
 import BaseModal from "../../common/Modal/BaseModal";
 import SearchInput from "../Input/SearchInput";
-import { SwapTokenType, Token } from "../../common/types";
 import { tokenList } from "../../common/data";
 import TokenItem from "../TokenItem";
 import TokenBadge from "../Badge";
 import { useDebounce, useSearchText } from "../../hooks";
-import { BaseModalProps } from "../../common/Modal/types";
-
-interface SelectTokenModalProps extends BaseModalProps {
-  type: SwapTokenType;
-  selectedToken: Token | null;
-  onSelectToken: (token: Token, type: SwapTokenType) => void;
-}
+import { SelectTokenModalProps } from "./types";
 
 function SelectTokenModal({
   title,
