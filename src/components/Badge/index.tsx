@@ -1,3 +1,4 @@
+import React from "react";
 import { SelectTokenProps } from "../../common/types";
 
 function TokenBadge({ token, isSelected, onClickToken }: SelectTokenProps) {
@@ -16,4 +17,4 @@ function TokenBadge({ token, isSelected, onClickToken }: SelectTokenProps) {
   );
 }
 
-export default TokenBadge;
+export default React.memo(TokenBadge);

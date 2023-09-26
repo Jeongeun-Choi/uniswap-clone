@@ -224,7 +224,7 @@ function SwapPage() {
               <div className="px-3 py-1.5">
                 <FontAwesomeIcon
                   icon={faGear}
-                  className="text-gray-700 w-5 h-5 hover:text-gray-400"
+                  className="text-gray-700 w-5 h-5 hover:text-gray-400 cursor-pointer"
                 />
               </div>
             </header>

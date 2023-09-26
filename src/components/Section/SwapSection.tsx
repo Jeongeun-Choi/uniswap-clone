@@ -29,6 +29,26 @@ function SwapSection({
     [tokenInfo?.currencyUnit]
   );
 
+  const ArrowDownIcon = useMemo(
+    () => (
+      <FontAwesomeIcon
+        icon={faChevronDown}
+        className="ml-1 w-[16px] h-[14px]"
+      />
+    ),
+    []
+  );
+  const selectedToken = useMemo(() => {
+    return tokenInfo?.currencyUnit ? (
+      <div className="flex items-center gap-1">
+        <div>{tokenInfo?.Icon?.({ width: 24, height: 24 })}</div>
+        <div>{tokenInfo?.currencyUnit}</div>
+      </div>
+    ) : (
+      <div>Select token</div>
+    );
+  }, [tokenInfo?.Icon, tokenInfo?.currencyUnit]);
+
   const dollar = useMemo(
     () =>
       tokenStandard[tokenInfo?.currencyUnit || defaultCurrencyUnit] *
@@ -50,22 +70,10 @@ function SwapSection({
           />
           <CommonButton
             className={commonButtonStyle}
-            leftIcon={
-              <FontAwesomeIcon
-                icon={faChevronDown}
-                className="ml-1 w-[16px] h-[14px]"
-              />
-            }
+            leftIcon={ArrowDownIcon}
             onClick={changeToggle}
           >
-            {tokenInfo?.currencyUnit ? (
-              <div className="flex items-center gap-1">
-                <div>{tokenInfo?.Icon?.({ width: 24, height: 24 })}</div>
-                <div>{tokenInfo?.currencyUnit}</div>
-              </div>
-            ) : (
-              <div>Select token</div>
-            )}
+            {selectedToken}
           </CommonButton>
         </div>
         {parseFloat(tokenInfo?.value || "") > 0 && <span>${dollar}</span>}

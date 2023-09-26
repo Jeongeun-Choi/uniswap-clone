@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactElement } from "react";
+import React, { PropsWithChildren, ReactElement } from "react";
 import { BaseButtonProps } from "./types";
 
 interface CommonButtonProps extends BaseButtonProps {
@@ -23,4 +23,4 @@ function CommonButton({
   );
 }
 
-export default CommonButton;
+export default React.memo(CommonButton);
