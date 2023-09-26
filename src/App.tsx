@@ -1,12 +1,15 @@
 import React, { PropsWithChildren } from "react";
 import Layout from "./components/Layout";
 import SwapPage from "./pages/SwapPage";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 function App({ children }: PropsWithChildren) {
   return (
-    <Layout>
-      <SwapPage />
-    </Layout>
+    <ErrorBoundary>
+      <Layout>
+        <SwapPage />
+      </Layout>
+    </ErrorBoundary>
   );
 }
 
