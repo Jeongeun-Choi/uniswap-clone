@@ -1,16 +1,10 @@
-import { PropsWithChildren, useMemo } from "react";
+import { PropsWithChildren } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { CommonButton, LinkButton } from "../../common/Button";
 import { SearchInput } from "../Input";
 import { IconEthLogo, IconUniswapLogo } from "../../common/Icons";
-
-const navItems = [
-  { title: "Swap", link: "/" },
-  { title: "Tokens", link: "/token" },
-  { title: "NFTs", link: "/nfts" },
-  { title: "Pools", link: "/pools" },
-];
+import { navItems } from "../../constants/constants";
 
 function Layout({ children }: PropsWithChildren) {
   return (

@@ -7,3 +7,10 @@ export const tokenStandard: Readonly<{ [key in CurrencyUnit]: number }> = {
 };
 
 export const defaultCurrencyUnit = "ETH";
+
+export const navItems = [
+  { title: "Swap", link: "/" },
+  { title: "Tokens", link: "/token" },
+  { title: "NFTs", link: "/nfts" },
+  { title: "Pools", link: "/pools" },
+];
