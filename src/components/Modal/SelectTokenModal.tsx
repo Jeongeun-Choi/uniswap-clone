@@ -1,10 +1,10 @@
 import { MouseEvent, useCallback } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import BaseModal from "../../common/Modal/BaseModal";
 import SearchInput from "../Input/SearchInput";
 import { SwapTokenType, Token } from "../../common/types";
 import { tokenList } from "../../common/data";
+import TokenItem from "../TokenItem";
+import TokenBadge from "../Badge";
 
 interface SelectTokenModalProps {
   title?: string;
@@ -60,48 +60,22 @@ function SelectTokenModal({
           />
           <ul className="flex flex-wrap my-3">
             {tokenList.map((token) => (
-              <li
-                key={token.id}
-                id={token.id.toString()}
-                className={`${
-                  selectedToken?.id === token.id && "bg-gray-200"
-                } flex w-fit m-1 py-[5px] pl-1.5 pr-3 rounded-[18px] basic_border border-gray-300 hover:bg-gray-100 cursor-pointer`}
-                onClick={handleClickToken}
-              >
-                <div className="mr-2">
-                  {token.Icon({ width: 24, height: 24 })}
-                </div>
-                <div>{token.currencyUnit}</div>
-              </li>
+              <TokenBadge
+                token={token}
+                isSelected={selectedToken?.id === token.id}
+                onClickToken={handleClickToken}
+              />
             ))}
           </ul>
         </div>
         <hr />
         <ul>
           {tokenList.map((token) => (
-            <li
-              key={token.id}
-              id={token.id.toString()}
-              className={`${
-                selectedToken?.id === token.id &&
-                "opacity-60 pointer-events-none"
-              } grid grid-cols-list gap-4 px-5 py-2 hover:bg-gray-100 cursor-pointer`}
-              onClick={handleClickToken}
-            >
-              <div>{token.Icon({ width: 36, height: 36 })}</div>
-              <div className="w-max">
-                <div>{token.name}</div>
-                <div className="text-xs text-gray-500">
-                  {token.currencyUnit}
-                </div>
-              </div>
-              <div></div>
-              {selectedToken?.id === token.id && (
-                <div className="flex justify-end items-center text-pink-900">
-                  <FontAwesomeIcon icon={faCheck} />
-                </div>
-              )}
-            </li>
+            <TokenItem
+              token={token}
+              isSelected={selectedToken?.id === token.id}
+              onClickToken={handleClickToken}
+            />
           ))}
         </ul>
       </main>
