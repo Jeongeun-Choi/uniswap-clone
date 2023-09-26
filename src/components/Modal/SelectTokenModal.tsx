@@ -74,6 +74,7 @@ function SelectTokenModal({
           <ul className="flex flex-wrap my-3">
             {tokenList.map((token) => (
               <TokenBadge
+                key={token.id}
                 token={token}
                 isSelected={selectedToken?.id === token.id}
                 onClickToken={handleClickToken}
@@ -88,6 +89,7 @@ function SelectTokenModal({
           ) : (
             searchTokenList.map((token) => (
               <TokenItem
+                key={token.id}
                 token={token}
                 isSelected={selectedToken?.id === token.id}
                 onClickToken={handleClickToken}
