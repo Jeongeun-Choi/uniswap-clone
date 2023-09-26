@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useMemo, useState } from "react";
+import { ChangeEvent, useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { CommonButton } from "../../common/Button";
@@ -6,6 +6,7 @@ import BaseInput from "../../common/Input/BaseInput";
 import { SelectTokenModal } from "../Modal";
 import { defaultCurrencyUnit, tokenStandard } from "../../constants/constants";
 import { SwapTokenType, Token } from "../../common/types";
+import { useToggle } from "../../hooks";
 
 interface SwapSectionProps {
   title: string;
@@ -29,7 +30,7 @@ function SwapSection({
   onChangeInput,
   onSelectToken,
 }: SwapSectionProps) {
-  const [toggle, setToggle] = useState<boolean>(false);
+  const { toggle, changeToggle } = useToggle(false);
 
   const commonButtonStyle = useMemo(
     () =>
@@ -43,10 +44,6 @@ function SwapSection({
       parseFloat(tokenInfo?.value || "0"),
     [tokenInfo?.currencyUnit, tokenInfo?.value]
   );
-
-  const handleToggle = useCallback(() => {
-    setToggle((prev) => !prev);
-  }, []);
 
   return (
     <>
@@ -68,7 +65,7 @@ function SwapSection({
                 className="ml-1 w-[16px] h-[14px]"
               />
             }
-            onClick={handleToggle}
+            onClick={changeToggle}
           >
             {tokenInfo?.currencyUnit ? (
               <div className="flex items-center gap-1">
@@ -88,7 +85,7 @@ function SwapSection({
           type={type}
           selectedToken={tokenInfo}
           onSelectToken={onSelectToken}
-          onCloseModal={handleToggle}
+          onCloseModal={changeToggle}
         />
       )}
     </>
