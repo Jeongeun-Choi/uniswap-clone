@@ -1,14 +1,7 @@
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MouseEvent, PropsWithChildren, useCallback, useRef } from "react";
-
-interface BaseModalProps {
-  width?: string;
-  height?: string;
-  title?: string;
-  hasCloseBtn?: boolean;
-  onCloseModal: () => void;
-}
+import { BaseModalProps } from "./types";
 
 function BaseModal({
   width,

@@ -6,14 +6,12 @@ import { tokenList } from "../../common/data";
 import TokenItem from "../TokenItem";
 import TokenBadge from "../Badge";
 import { useDebounce } from "../../hooks";
+import { BaseModalProps } from "../../common/Modal/types";
 
-interface SelectTokenModalProps {
-  title?: string;
-  hasCloseBtn?: boolean;
+interface SelectTokenModalProps extends BaseModalProps {
   type: SwapTokenType;
   selectedToken: Token | null;
   onSelectToken: (token: Token, type: SwapTokenType) => void;
-  onCloseModal: () => void;
 }
 
 function SelectTokenModal({
