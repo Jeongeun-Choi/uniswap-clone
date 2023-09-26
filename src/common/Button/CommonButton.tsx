@@ -8,7 +8,7 @@ interface CommonButtonProps extends BaseButtonProps {
 
 const commonClassName = "text-center ";
 function CommonButton({
-  className,
+  className = "",
   rightIcon,
   leftIcon,
   children,

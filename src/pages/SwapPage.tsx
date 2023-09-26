@@ -197,8 +197,8 @@ function SwapPage() {
 
   return (
     <>
-      <div className="w-full flex justify-center">
-        <div className="w-[480px] px-2 pt-16">
+      <div className="w-full grid grid-cols-layout">
+        <div className="w-[480px] px-2 pt-16 col-start-2 col-end-3">
           <main className="rounded-[24px] border-gray-150 basic_border px-2 pt-3 pb-2 shadow-custom">
             <header className="flex_between mb-2.5 items-center">
               <nav className="flex_between px-3 gap-4">
