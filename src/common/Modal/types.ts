@@ -3,5 +3,6 @@ export interface BaseModalProps {
   height?: string;
   title?: string;
   hasCloseBtn?: boolean;
+  canCloseClickOutside?: boolean;
   onCloseModal: () => void;
 }

@@ -8,6 +8,7 @@ function BaseModal({
   height,
   title,
   hasCloseBtn,
+  canCloseClickOutside = true,
   onCloseModal,
   children,
 }: PropsWithChildren<BaseModalProps>) {
@@ -22,11 +23,11 @@ function BaseModal({
 
   const handleCloseModal = useCallback(
     (e: MouseEvent<HTMLDivElement>) => {
-      if (modalRef.current === e.target) {
+      if (modalRef.current === e.target && canCloseClickOutside) {
         onCloseModal();
       }
     },
-    [onCloseModal]
+    [canCloseClickOutside, onCloseModal]
   );
 
   return (
