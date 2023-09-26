@@ -1,6 +1,4 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Uniswap clone
 
 ## Available Scripts
 
@@ -14,33 +12,37 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
+## 기술 스택
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- React 18.2
+- Typescript 4.9
+- tailwindcss 3.3
 
-### `npm run build`
+## 기능 구현
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Header
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Header는 단순히 퍼블리싱만 구현했습니다.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Main
 
-### `npm run eject`
+- pay 영역의 기본토큰은 Ether 토큰입니다.
+- 하나라도 토큰이 선택되지 않았으면 두 개의 토큰 개수를 입력 받을 수 없습니다.
+- 두 개의 토큰이 선택됐을 경우 하단에 receive 토큰이 1일때의 pay의 토큰 개수가 나타냅니다.
+- 음이 아닌 정수와 실수만 입력 가능합니다.
+- 가운데 화살표를 누르면 pay와 receive의 토큰들이 교환됩니다.
+- connect wallet 기능은 구현하지 않았습니다.
+- 언어 변경 기능은 구현하지 않았습니다. (기본으로 en-US를 따릅니다.)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### SelectTokenModal
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- 기본으로 ETH, USDC, WBTC 토큰이 주어집니다.
+- 검색을하여 토큰을 찾을 수 있습니다.
+  - 이때 검색 기능은 useDebounce customhook을 이용해서 구현했습니다.
+- 이미 선택된 토큰은 다시 선택할 수 없습니다.
+- 바깥 영역을 누르면 창이 닫힙니다.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### 그 외
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- 아이콘 같은 경우는 SVG 파일과 Fontawesome을 이용했습니다.
+- 나중의 자바스크립트 에러를 대처하기 위한 ErrorBoundary 컴포넌트를 간단히 구현해놨습니다.
