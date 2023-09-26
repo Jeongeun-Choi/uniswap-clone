@@ -5,26 +5,31 @@ import { CommonButton } from "../common/Button";
 import { tokenList } from "../common/data";
 import { SwapSection } from "../components/Section";
 import { defaultCurrencyUnit, tokenStandard } from "../constants/constants";
-import { CurrencyUnit, SwapToken, SwapTokenType, Token } from "../common/types";
-
-const baseToken = {
-  id: 0,
-  name: "",
-  currencyUnit: defaultCurrencyUnit as CurrencyUnit,
-};
+import { SwapToken, SwapTokenType, Token } from "../common/types";
 
 const baseSwapToken = {
-  pay: { ...tokenList[0], value: "" },
+  pay: { ...tokenList[0] },
   receive: null,
 };
 
+const baseSwapTokenValue = {
+  pay: "",
+  receive: "",
+};
+
+interface SwapTokenValue {
+  pay: string;
+  receive: string;
+}
 function SwapPage() {
   const [swapToken, setSwapToken] = useState<SwapToken>(baseSwapToken);
-  const hasValueSelectedAllSwapToken = useMemo(
-    () => !!swapToken.pay?.value && !!swapToken.receive?.value,
-    [swapToken.pay, swapToken.receive]
-  );
+  const [swapTokenValue, setSwapTokenValue] =
+    useState<SwapTokenValue>(baseSwapTokenValue);
 
+  const hasValueSelectedAllSwapToken = useMemo(
+    () => !!swapTokenValue.pay && !!swapTokenValue.receive,
+    [swapTokenValue.pay, swapTokenValue.receive]
+  );
   const calculateCurrencyExchangeRate = useCallback(
     ({
       isPayType = true,
@@ -47,8 +52,8 @@ function SwapPage() {
   );
 
   const checkIsFloat = useCallback((value: string) => {
-    const floatReg = new RegExp(/^[0-9]?.{0,1}[0-9]*$/);
-    if (floatReg.test(value)) {
+    const floatReg = new RegExp(/^[0-9]+.{0,1}[0-9^\d]*$/);
+    if (floatReg.test(value) || value === "") {
       return true;
     }
 
@@ -62,45 +67,62 @@ function SwapPage() {
         value,
         dataset: { type },
       } = element;
-
       if (!type || !checkIsFloat(value)) {
         return;
       }
       const isPayType = type === "pay";
-      const otherType = isPayType ? "receive" : "pay";
+      const otherTokenType = isPayType ? "receive" : "pay";
+      const currentFocusToken = swapToken[type as SwapTokenType];
+      const otherToken = swapToken[otherTokenType];
+      const currentFocusTokenValue = swapTokenValue[type as SwapTokenType];
+      const otherTokenValue = swapTokenValue[otherTokenType];
 
-      let newSwapToken = {
-        ...swapToken,
-        [type]: { ...swapToken[type as SwapTokenType], value },
-        [otherType]: { ...swapToken[otherType], value: "" },
-      };
-      // pay, receive 둘 다 null이 아닐 경우에는 onChange 될 때마다 환전해준다.
-      if (hasValueSelectedAllSwapToken) {
-        const currencyExchangeRate = calculateCurrencyExchangeRate({
-          isPayType,
-        });
-
-        const newValue = currencyExchangeRate * parseFloat(value);
-        const otherTokenType = isPayType ? "receive" : "pay";
-
-        newSwapToken = {
-          ...newSwapToken,
-          [otherTokenType]: { ...swapToken[otherTokenType], value: newValue },
+      if (!currentFocusTokenValue && otherTokenValue) {
+        const newSwapTokenValue = {
+          ...swapTokenValue,
+          [type]: value,
+          [otherTokenType]: "",
         };
+        setSwapTokenValue(newSwapTokenValue);
+        return;
+      }
+      if (currentFocusToken?.id && !otherToken) {
+        const newSwapTokenValue = {
+          ...swapTokenValue,
+          [type]: value,
+        };
+        setSwapTokenValue(newSwapTokenValue);
+        return;
       }
 
-      setSwapToken(newSwapToken);
+      if (!currentFocusToken && otherToken?.id) {
+        const newSwapTokenValue = {
+          ...swapTokenValue,
+          [type]: value,
+        };
+        setSwapTokenValue(newSwapTokenValue);
+        return;
+      }
+      const currencyExchangeRate = calculateCurrencyExchangeRate({
+        isPayType,
+      });
+
+      const newValue = currencyExchangeRate * parseFloat(value || "0") || "";
+
+      let newSwapTokenValue = {
+        ...swapTokenValue,
+        [type]: value,
+        [otherTokenType]: newValue.toString(),
+      };
+
+      setSwapTokenValue(newSwapTokenValue);
     },
-    [
-      checkIsFloat,
-      swapToken,
-      hasValueSelectedAllSwapToken,
-      calculateCurrencyExchangeRate,
-    ]
+    [checkIsFloat, swapToken, calculateCurrencyExchangeRate, swapTokenValue]
   );
 
   const handleSwapToken = useCallback(() => {
     setSwapToken((prev) => ({ pay: prev.receive, receive: prev.pay }));
+    setSwapTokenValue((prev) => ({ pay: prev.receive, receive: prev.pay }));
   }, []);
 
   const handleSelectToken = useCallback(
@@ -112,6 +134,10 @@ function SwapPage() {
         case "pay": {
           if (swapToken.receive?.id === token.id) {
             setSwapToken({ pay: swapToken.receive, receive: swapToken.pay });
+            setSwapTokenValue({
+              pay: swapTokenValue.receive,
+              receive: swapTokenValue.pay,
+            });
             return;
           }
           break;
@@ -119,6 +145,10 @@ function SwapPage() {
         case "receive": {
           if (swapToken.pay?.id === token.id) {
             setSwapToken({ pay: swapToken.receive, receive: swapToken.pay });
+            setSwapTokenValue({
+              pay: swapTokenValue.receive,
+              receive: swapTokenValue.pay,
+            });
             return;
           }
           break;
@@ -128,40 +158,92 @@ function SwapPage() {
       }
 
       const otherTokenType = isPayType ? "receive" : "pay";
-      // null에서 처음으로 선택한 토큰일 경우
-      if (!swapToken[type]?.id) {
-        const selectedToken = { ...swapToken[type], ...token };
-        const otherToken = swapToken[otherTokenType];
+      const selectedToken = token;
+      const otherToken = swapToken[otherTokenType];
+      const selectedTokenValue = swapTokenValue[type];
+      const otherTokenValue = swapTokenValue[otherTokenType];
 
-        const hasSelectedTokenValue = selectedToken?.value ? true : false;
-
-        const valueToCalculate = hasSelectedTokenValue
-          ? selectedToken?.value
-          : otherToken?.value;
-
+      // pay쪽 토큰이 선택 안되어 있는 상태
+      if (!swapToken[type] && isPayType) {
         const currencyExchangeRate = calculateCurrencyExchangeRate({
           isPayType,
           currentCurrencyUnit: selectedToken?.currencyUnit,
           otherCurrencyUnit: otherToken?.currencyUnit,
         });
-        const newValue =
-          currencyExchangeRate * parseFloat(valueToCalculate || "");
-
         let newSwapToken = {
           ...swapToken,
           [type]: {
             ...selectedToken,
-            value: hasSelectedTokenValue
-              ? selectedToken.value
-              : newValue.toString(),
-          },
-          [otherTokenType]: {
-            ...otherToken,
-            value: hasSelectedTokenValue
-              ? newValue.toString()
-              : otherToken?.value,
           },
         };
+        // tokenValue는 있을 경우 바로 계산
+        if (selectedTokenValue) {
+          const newValue =
+            currencyExchangeRate * parseFloat(selectedTokenValue || "");
+          const newSwapTokenValue = {
+            ...swapTokenValue,
+            [otherTokenType]: newValue.toString(),
+          };
+          setSwapTokenValue(newSwapTokenValue);
+        }
+
+        //tokenValue가 없지만 다른쪽은 있을 경우
+        if (!selectedTokenValue && otherTokenValue) {
+          const newValue =
+            currencyExchangeRate * parseFloat(otherTokenValue || "");
+          const newSwapTokenValue = {
+            ...swapTokenValue,
+            [type]: newValue.toString(),
+          };
+          setSwapTokenValue(newSwapTokenValue);
+        }
+
+        //tokenValue도 없고 다른쪽도 없을 경우
+        setSwapToken(newSwapToken);
+        return;
+      }
+
+      // receive쪽 토큰이 선택 안되어 있는 상태
+      if (!swapToken[type] && !isPayType) {
+        let newSwapToken = {
+          ...swapToken,
+          [type]: {
+            ...selectedToken,
+          },
+        };
+        // tokenValue는 있을 경우 바로 계산
+        if (selectedTokenValue) {
+          const currencyExchangeRate = calculateCurrencyExchangeRate({
+            isPayType,
+            currentCurrencyUnit: otherToken?.currencyUnit,
+            otherCurrencyUnit: selectedToken?.currencyUnit,
+          });
+          const newValue =
+            currencyExchangeRate * parseFloat(selectedTokenValue || "");
+          const newSwapTokenValue = {
+            ...swapTokenValue,
+            [otherTokenType]: newValue.toString(),
+          };
+          setSwapTokenValue(newSwapTokenValue);
+        }
+
+        //tokenValue가 없지만 다른쪽은 있을 경우
+        if (!selectedTokenValue && otherTokenValue) {
+          const currencyExchangeRate = calculateCurrencyExchangeRate({
+            isPayType,
+            currentCurrencyUnit: selectedToken?.currencyUnit,
+            otherCurrencyUnit: otherToken?.currencyUnit,
+          });
+          const newValue =
+            currencyExchangeRate * parseFloat(otherTokenValue || "");
+          const newSwapTokenValue = {
+            ...swapTokenValue,
+            [type]: newValue.toString(),
+          };
+          setSwapTokenValue(newSwapTokenValue);
+        }
+
+        //tokenValue도 없고 다른쪽도 없을 경우
         setSwapToken(newSwapToken);
         return;
       }
@@ -169,37 +251,47 @@ function SwapPage() {
       let newSwapToken = {
         ...swapToken,
       };
+      let newSwapTokenValue = {
+        ...swapTokenValue,
+      };
+      if (swapToken[type] && !selectedTokenValue) {
+        newSwapToken = {
+          ...newSwapToken,
+          [type]: token,
+        };
+        setSwapToken(newSwapToken);
+        return;
+      }
+      console.log("엉ㅇ엉");
       const currencyExchangeRate = calculateCurrencyExchangeRate({
         isPayType,
         currentCurrencyUnit: token.currencyUnit,
-        otherCurrencyUnit: swapToken[otherTokenType]?.currencyUnit,
+        otherCurrencyUnit: otherToken?.currencyUnit,
       });
       switch (type) {
         case "pay": {
           const newValue =
-            currencyExchangeRate * parseFloat(swapToken.receive?.value || "0");
-          const newPayToken = { ...swapToken.pay, ...token };
-          const newReceiveToken = {
-            ...(swapToken.receive || baseToken),
-            value: newValue.toString(),
-          };
+            currencyExchangeRate * parseFloat(swapTokenValue.pay || "0") || "";
           newSwapToken = {
-            pay: newPayToken,
-            receive: newReceiveToken,
+            ...newSwapToken,
+            pay: { ...token },
+          };
+          newSwapTokenValue = {
+            ...newSwapTokenValue,
+            receive: newValue.toString(),
           };
           break;
         }
         case "receive": {
           const newValue =
-            currencyExchangeRate * parseFloat(swapToken.pay?.value || "0");
-          const newPayToken = swapToken.pay;
-          const newReceiveToken = {
-            ...token,
-            value: newValue.toString(),
-          };
+            currencyExchangeRate * parseFloat(swapTokenValue.pay || "0") || "";
           newSwapToken = {
-            pay: newPayToken,
-            receive: newReceiveToken,
+            ...newSwapToken,
+            receive: { ...token },
+          };
+          newSwapTokenValue = {
+            ...newSwapTokenValue,
+            receive: newValue.toString(),
           };
           break;
         }
@@ -207,8 +299,9 @@ function SwapPage() {
           break;
       }
       setSwapToken(newSwapToken);
+      setSwapTokenValue(newSwapTokenValue);
     },
-    [calculateCurrencyExchangeRate, swapToken]
+    [calculateCurrencyExchangeRate, swapToken, swapTokenValue]
   );
 
   return (
@@ -231,7 +324,7 @@ function SwapPage() {
             <article>
               <SwapSection
                 title="You pay"
-                inputValue={swapToken.pay?.value || ""}
+                inputValue={swapTokenValue.pay}
                 tokenInfo={swapToken.pay}
                 type="pay"
                 onChangeInput={handleChangeValue}
@@ -245,7 +338,7 @@ function SwapPage() {
               </div>
               <SwapSection
                 title="You receive"
-                inputValue={swapToken.receive?.value || ""}
+                inputValue={swapTokenValue.receive}
                 tokenInfo={swapToken.receive}
                 type="receive"
                 onChangeInput={handleChangeValue}
