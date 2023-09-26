@@ -51,8 +51,10 @@ function SwapSection({
 
   const dollar = useMemo(
     () =>
-      tokenStandard[tokenInfo?.currencyUnit || defaultCurrencyUnit] *
-      parseFloat(tokenInfo?.value || "0"),
+      (
+        tokenStandard[tokenInfo?.currencyUnit || defaultCurrencyUnit] *
+        parseFloat(tokenInfo?.value || "0")
+      ).toLocaleString("en-US"),
     [tokenInfo?.currencyUnit, tokenInfo?.value]
   );
 
