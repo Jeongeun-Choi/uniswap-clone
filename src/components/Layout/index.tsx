@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { CommonButton, LinkButton } from "../../common/Button";
@@ -7,9 +7,9 @@ import { IconEthLogo, IconUniswapLogo } from "../../common/Icons";
 
 const navItems = [
   { title: "Swap", link: "/" },
-  { title: "Tokens", link: "/" },
-  { title: "NFTs", link: "/" },
-  { title: "Pools", link: "/" },
+  { title: "Tokens", link: "/token" },
+  { title: "NFTs", link: "/nfts" },
+  { title: "Pools", link: "/pools" },
 ];
 
 function Layout({ children }: PropsWithChildren) {
@@ -22,7 +22,15 @@ function Layout({ children }: PropsWithChildren) {
             <ul className="flex">
               {navItems.map((nav) => (
                 <li key={nav.title}>
-                  <LinkButton className="px-3 py-2">{nav.title}</LinkButton>
+                  <LinkButton
+                    className={`px-3 py-2 font-medium ${
+                      (nav.link === window.location.pathname &&
+                        "text-gray-900") ||
+                      ""
+                    }`}
+                  >
+                    {nav.title}
+                  </LinkButton>
                 </li>
               ))}
               <li>
