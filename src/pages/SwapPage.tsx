@@ -237,12 +237,14 @@ function SwapPage() {
               />
             </article>
             {hasValueSelectedAllSwapToken && (
-              <div className=" basic_border border-gray-150 rounded-2xl px-4 py-3 mt-1">
-                {1} {swapToken.receive?.currencyUnit} ={" "}
-                {calculateCurrencyExchangeRate(false)}{" "}
-                {swapToken.pay?.currencyUnit}
-                <span>
-                  (
+              <div className=" basic_border border-gray-150 rounded-2xl px-4 py-3 mt-1 text-sm">
+                <span className="text-sm">
+                  {1} {swapToken.receive?.currencyUnit} ={" "}
+                  {calculateCurrencyExchangeRate(false)}{" "}
+                  {swapToken.pay?.currencyUnit}
+                </span>{" "}
+                <span className="text-gray-700">
+                  ($
                   {tokenStandard[
                     swapToken.receive?.currencyUnit || defaultCurrencyUnit
                   ].toLocaleString("en-US")}
