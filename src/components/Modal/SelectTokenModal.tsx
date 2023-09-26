@@ -10,6 +10,7 @@ interface SelectTokenModalProps {
   title?: string;
   hasCloseBtn?: boolean;
   type: SwapTokenType;
+  selectedToken: Token | null;
   onSelectToken: (token: Token, type: SwapTokenType) => void;
   onCloseModal: () => void;
 }
@@ -18,6 +19,7 @@ function SelectTokenModal({
   title,
   hasCloseBtn = true,
   type,
+  selectedToken,
   onSelectToken,
   onCloseModal,
 }: SelectTokenModalProps) {
@@ -61,7 +63,9 @@ function SelectTokenModal({
               <li
                 key={token.id}
                 id={token.id.toString()}
-                className="flex w-fit m-1 py-[5px] pl-1.5 pr-3 rounded-[18px] basic_border border-gray-300 hover:bg-gray-100 cursor-pointer"
+                className={`${
+                  selectedToken?.id === token.id && "bg-gray-200"
+                } flex w-fit m-1 py-[5px] pl-1.5 pr-3 rounded-[18px] basic_border border-gray-300 hover:bg-gray-100 cursor-pointer`}
                 onClick={handleClickToken}
               >
                 <div className="mr-2">
@@ -78,7 +82,10 @@ function SelectTokenModal({
             <li
               key={token.id}
               id={token.id.toString()}
-              className="grid grid-cols-list gap-4 px-5 py-2 hover:bg-gray-100 cursor-pointer"
+              className={`${
+                selectedToken?.id === token.id &&
+                "opacity-60 pointer-events-none"
+              } grid grid-cols-list gap-4 px-5 py-2 hover:bg-gray-100 cursor-pointer`}
               onClick={handleClickToken}
             >
               <div>{token.Icon({ width: 36, height: 36 })}</div>
@@ -89,9 +96,11 @@ function SelectTokenModal({
                 </div>
               </div>
               <div></div>
-              <div className="flex justify-end items-center text-pink-900">
-                <FontAwesomeIcon icon={faCheck} />
-              </div>
+              {selectedToken?.id === token.id && (
+                <div className="flex justify-end items-center text-pink-900">
+                  <FontAwesomeIcon icon={faCheck} />
+                </div>
+              )}
             </li>
           ))}
         </ul>
