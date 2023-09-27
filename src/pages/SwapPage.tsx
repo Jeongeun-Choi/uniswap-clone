@@ -226,7 +226,10 @@ function SwapPage() {
             };
             setSwapToken(newSwapToken);
             setSwapTokenValue(newSwapTokenValue);
+            return;
           }
+
+          setSwapToken(newSwapToken);
           break;
         }
         case "receive": {
@@ -283,7 +286,10 @@ function SwapPage() {
             };
             setSwapToken(newSwapToken);
             setSwapTokenValue(newSwapTokenValue);
+            return;
           }
+
+          setSwapToken(newSwapToken);
           break;
         }
         default:
