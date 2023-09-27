@@ -13,7 +13,7 @@ export function calculateExchangeFloat(
   return (
     (currencyExchangeRate *
       10 ** exchangeRateNumericalIndex *
-      (parseFloat(value) * 10 ** valueNumericalIndex)) /
+      (parseFloat(value || "0") * 10 ** valueNumericalIndex)) /
     10 ** totalNumericalIndex
   );
 }
