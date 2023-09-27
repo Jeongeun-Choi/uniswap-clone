@@ -73,11 +73,10 @@ function SwapPage() {
   );
 
   const checkIsFloat = useCallback((value: string) => {
-    const floatReg = new RegExp(/^[0-9]+.{0,1}[0-9^\d]*$/);
+    const floatReg = new RegExp(/^[0-9]+[.]{0,1}[0-9]*$/);
     if (floatReg.test(value) || value === "") {
       return true;
     }
-
     return false;
   }, []);
 
