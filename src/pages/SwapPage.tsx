@@ -301,8 +301,12 @@ function SwapPage() {
           <main className="rounded-[24px] border-gray-150 basic_border px-2 pt-3 pb-2 shadow-custom">
             <header className="flex_between mb-2.5 items-center">
               <nav className="flex_between px-3 gap-4">
-                <div className="text-[#222222] font-medium">Swap</div>
-                <div className="text-gray-700 font-medium">Buy</div>
+                <div className="text-[#222222] font-medium cursor-pointer">
+                  Swap
+                </div>
+                <div className="text-gray-700 font-medium cursor-pointer">
+                  Buy
+                </div>
               </nav>
               <div className="px-3 py-1.5">
                 <FontAwesomeIcon
