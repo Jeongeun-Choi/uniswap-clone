@@ -7,6 +7,7 @@ import { SelectTokenModal } from "../Modal";
 import { defaultCurrencyUnit, tokenStandard } from "../../constants/constants";
 import { useToggle } from "../../hooks";
 import { SwapSectionProps } from "./types";
+import translateThousandsComma from "../../utils/translateThousandsComma";
 
 const selectedButtonStyle =
   "flex items-center ml-3 py-1 pl-1 pr-2 rounded-[18px] text-black text-xl basic_border border-gray-200 bg-white hover:bg-gray-100 cursor-pointer shadow-[0px_0px_10px_0px_rgba(34,34,34,0.04)]";
@@ -51,10 +52,11 @@ function SwapSection({
 
   const dollar = useMemo(
     () =>
-      (
-        tokenStandard[tokenInfo?.currencyUnit || defaultCurrencyUnit] *
-        parseFloat(tokenInfo?.value || "0")
-      ).toLocaleString("en-US"),
+      translateThousandsComma({
+        value:
+          tokenStandard[tokenInfo?.currencyUnit || defaultCurrencyUnit] *
+          parseFloat(tokenInfo?.value || "0"),
+      }),
     [tokenInfo?.currencyUnit, tokenInfo?.value]
   );
 
