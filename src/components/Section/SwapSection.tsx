@@ -55,11 +55,10 @@ function SwapSection({
       translateThousandsComma({
         value:
           tokenStandard[tokenInfo?.currencyUnit || defaultCurrencyUnit] *
-          parseFloat(tokenInfo?.value || "0"),
+          parseFloat(inputValue || "0"),
       }),
-    [tokenInfo?.currencyUnit, tokenInfo?.value]
+    [inputValue, tokenInfo?.currencyUnit]
   );
-
   return (
     <>
       <section className="flex_direction_col rounded-2xl basic_border border-gray-100 bg-gray-100 text-gray-700 p-4 h-[120px]">
@@ -80,7 +79,7 @@ function SwapSection({
             {selectedToken}
           </CommonButton>
         </div>
-        {parseFloat(tokenInfo?.value || "") > 0 && <span>${dollar}</span>}
+        {(parseFloat(inputValue) || "") && tokenInfo && <span>${dollar}</span>}
       </section>
       {toggle && (
         <SelectTokenModal
