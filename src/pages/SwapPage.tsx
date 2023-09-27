@@ -7,6 +7,7 @@ import { SwapSection } from "../components/Section";
 import { defaultCurrencyUnit, tokenStandard } from "../constants/constants";
 import { SwapToken, SwapTokenType, Token } from "../common/types";
 import translateThousandsComma from "../utils/translateThousandsComma";
+import { calculateExchangeFloat } from "../utils/calculateCurrencyExchangeFloat";
 
 const baseSwapToken = {
   pay: { ...tokenList[0] },
@@ -48,26 +49,6 @@ function SwapPage() {
     [swapToken.pay?.currencyUnit, swapToken.receive?.currencyUnit]
   );
 
-  const calculateExchangeFloat = useCallback(
-    (currencyExchangeRate: number, value: string) => {
-      const currencyExchangeRateDecimal =
-        currencyExchangeRate.toString().split(".")[1] || "";
-      const valueDecimal = value.split(".")[1] || "";
-
-      const exchangeRateNumericalIndex = currencyExchangeRateDecimal.length;
-      const valueNumericalIndex = valueDecimal.length;
-
-      const totalNumericalIndex =
-        exchangeRateNumericalIndex + valueNumericalIndex;
-      return (
-        (currencyExchangeRate *
-          10 ** exchangeRateNumericalIndex *
-          (parseFloat(value) * 10 ** valueNumericalIndex)) /
-        10 ** totalNumericalIndex
-      );
-    },
-    []
-  );
   const hasValueSelectedAllSwapToken = useMemo(
     () => !!swapTokenValue.pay && !!swapTokenValue.receive,
     [swapTokenValue.pay, swapTokenValue.receive]
@@ -156,13 +137,7 @@ function SwapPage() {
 
       setSwapTokenValue(newSwapTokenValue);
     },
-    [
-      checkIsFloat,
-      swapToken,
-      swapTokenValue,
-      calculateCurrencyExchangeRate,
-      calculateExchangeFloat,
-    ]
+    [checkIsFloat, swapToken, swapTokenValue, calculateCurrencyExchangeRate]
   );
 
   const handleSwapToken = useCallback(() => {
@@ -316,12 +291,7 @@ function SwapPage() {
           break;
       }
     },
-    [
-      calculateCurrencyExchangeRate,
-      calculateExchangeFloat,
-      swapToken,
-      swapTokenValue,
-    ]
+    [calculateCurrencyExchangeRate, swapToken, swapTokenValue]
   );
 
   return (
