@@ -127,12 +127,12 @@ function SwapPage() {
         isPayType,
       });
 
-      const newValue = calculateExchangeFloat(currencyExchangeRate, value);
-
+      const newValue =
+        calculateExchangeFloat(currencyExchangeRate, value) || "";
       let newSwapTokenValue = {
         ...swapTokenValue,
         [type]: value,
-        [otherTokenType]: newValue.toString() || "",
+        [otherTokenType]: newValue.toString(),
       };
 
       setSwapTokenValue(newSwapTokenValue);
