@@ -1,10 +1,10 @@
-import { MouseEvent, useCallback, useMemo } from "react";
+import { MouseEvent, useCallback, useDeferredValue, useMemo } from "react";
 import BaseModal from "../../common/Modal/BaseModal";
 import SearchInput from "../Input/SearchInput";
 import { tokenList } from "../../common/data";
 import TokenItem from "../TokenItem";
 import TokenBadge from "../Badge";
-import { useDebounce, useSearchText } from "../../hooks";
+import { useSearchText } from "../../hooks";
 import { SelectTokenModalProps } from "./types";
 
 function SelectTokenModal({
@@ -16,10 +16,10 @@ function SelectTokenModal({
   onCloseModal,
 }: SelectTokenModalProps) {
   const { searchText, changeSearchText } = useSearchText("");
-  const debounceSearchText = useDebounce(searchText, 200);
+  const deferredSearchText = useDeferredValue(searchText);
 
   const searchTokenList = tokenList.filter((token) =>
-    token.name.toLowerCase().includes(debounceSearchText.toLowerCase())
+    token.name.toLowerCase().includes(deferredSearchText.toLowerCase())
   );
   const isEmptyTokenList = useMemo(
     () => (searchTokenList.length === 0 ? true : false),
