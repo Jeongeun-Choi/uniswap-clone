@@ -36,17 +36,21 @@ function BaseModal({
     [canCloseClickOutside, onCloseModal]
   );
 
-  useEffect(() => {
-    const escCloseModal = (e: KeyboardEvent) => {
+  const handleEscCloseModal = useCallback(
+    (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         onCloseModal();
       }
-    };
+    },
+    [onCloseModal]
+  );
+
+  useEffect(() => {
     if (modalRef.current) {
-      document.addEventListener("keydown", escCloseModal);
+      document.addEventListener("keydown", handleEscCloseModal);
     }
-    return () => document.removeEventListener("keydown", escCloseModal);
-  }, [onCloseModal]);
+    return () => document.removeEventListener("keydown", handleEscCloseModal);
+  }, [handleEscCloseModal]);
 
   return (
     <div
