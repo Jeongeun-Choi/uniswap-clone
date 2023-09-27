@@ -29,7 +29,6 @@ You will also see any lint errors in the console.
 - pay 영역의 기본토큰은 Ether 토큰입니다.
 - 하나라도 토큰이 선택되지 않았으면 두 개의 토큰 개수를 입력 받을 수 없습니다.
 - 두 개의 토큰이 선택됐을 경우 하단에 receive 토큰이 1일때의 pay의 토큰 개수가 나타냅니다.
-- 음이 아닌 정수와 실수만 입력 가능합니다.
 - 가운데 화살표를 누르면 pay와 receive의 토큰들이 교환됩니다.
 - connect wallet 기능은 구현하지 않았습니다.
 - 언어 변경 기능은 구현하지 않았습니다. (기본으로 en-US를 따릅니다.)
@@ -38,8 +37,7 @@ You will also see any lint errors in the console.
 
 - 기본으로 ETH, USDC, WBTC 토큰이 주어집니다.
 - 검색을하여 토큰을 찾을 수 있습니다.
-  - 이때 검색 기능은 useDebounce customhook을 이용해서 구현했습니다.
-- 이미 선택된 토큰은 다시 선택할 수 없습니다.
+  - 이때 검색 기능은 useDeferredValue를 이용해서 구현했습니다.
 - 바깥 영역을 누르면 창이 닫힙니다.
 
 ### 그 외
